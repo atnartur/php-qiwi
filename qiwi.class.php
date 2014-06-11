@@ -52,6 +52,28 @@ class Qiwi{
     
     
     /**
+    * Конструктор класса. Проверяет наличие CURL
+    */
+    function __construct(){
+        if(!function_exists('curl_init')){
+            throw new Exception('CURL library not found on this server');
+        }
+    }
+    
+    
+    /**
+	* Создает новый CURL запрос и выставляет таймаут соединения 30 секунд
+	*
+	* @returns {resource} CURL resourse
+	*/
+    private function __curl_start($url){
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        return $ch;
+    }
+    
+    
+    /**
 	* Выставление счета
 	* 
 	* @param {string} tel Телефон пользователя, на которого выставляется счет
@@ -73,7 +95,7 @@ class Qiwi{
         );
                 
         
-        $ch = curl_init('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
+        $ch = $this->__curl_start('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Accept: text/json",
@@ -91,7 +113,7 @@ class Qiwi{
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
-        $httpResponseAr = json_decode($httpResponse);
+        $httpResponseAr = @json_decode($httpResponse);
         return $httpResponseAr->response;
     }
     
@@ -116,7 +138,7 @@ class Qiwi{
 	* @returns {object} Объект ответа от сервера QIWI
 	*/
     function info($bill_id){
-        $ch = curl_init('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
+        $ch = $this->__curl_start('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Accept: text/json",
@@ -133,7 +155,7 @@ class Qiwi{
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
-        $httpResponseAr = json_decode($httpResponse);
+        $httpResponseAr = @json_decode($httpResponse);
         return $httpResponseAr->response;
     }
     
@@ -145,7 +167,7 @@ class Qiwi{
 	* @returns {object} Объект ответа от сервера QIWI
 	*/
     function reject($bill_id){
-        $ch = curl_init('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
+        $ch = $this->__curl_start('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Accept: text/json",
@@ -162,7 +184,7 @@ class Qiwi{
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
-        $httpResponseAr = json_decode($httpResponse);
+        $httpResponseAr = @json_decode($httpResponse);
         return $httpResponseAr->response;
     }
 }
