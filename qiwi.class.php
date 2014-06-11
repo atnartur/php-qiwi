@@ -2,7 +2,7 @@
 /**
  * Qiwi - класс для работы с платежным API от QIWI
  * @package Qiwi
- * @author atnartur (Атнагулов Артур)
+ * @author atnartur (Атнагулов Артур) <i@atnartur.ru>
  * @copyright 2014 atnartur (Атнагулов Артур)
  */
 
@@ -16,7 +16,7 @@ class Qiwi{
     
     
     /**
-    * API DI (REST ID) для BASIC авторизации
+    * API ID (REST ID) для BASIC авторизации
     * @var int
     */
     public $rest_id = 00000000;
