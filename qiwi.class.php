@@ -1,50 +1,50 @@
 <?
 /**
- * Qiwi - класс для работы с платежным API от QIWI
+ * Qiwi - РєР»Р°СЃСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїР»Р°С‚РµР¶РЅС‹Рј API РѕС‚ QIWI
  * @package Qiwi
- * @author atnartur (Атнагулов Артур)
- * @copyright 2014 atnartur (Атнагулов Артур)
+ * @author atnartur (РђС‚РЅР°РіСѓР»РѕРІ РђСЂС‚СѓСЂ)
+ * @copyright 2014 atnartur (РђС‚РЅР°РіСѓР»РѕРІ РђСЂС‚СѓСЂ)
  */
 
 
 class Qiwi{
     /**
-    * ID магазина
+    * ID РјР°РіР°Р·РёРЅР°
     * @var int
     */
     public $shop_id = 000000;
     
     
     /**
-    * API DI (REST ID) для BASIC авторизации
+    * API DI (REST ID) РґР»СЏ BASIC Р°РІС‚РѕСЂРёР·Р°С†РёРё
     * @var int
     */
     public $rest_id = 00000000;
     
     
     /**
-    * пароль API
+    * РїР°СЂРѕР»СЊ API
     * @var string
     */
     public $rest_pass = 'PASSWORD';
     
     
     /**
-    * валюта
+    * РІР°Р»СЋС‚Р°
     * @var string
     */
     public $currency = 'RUB';
     
     
     /**
-    * Источник оплаты: mobile - оплата с мобильного телефона пользователя, qw - с любых источников оплаты Visa Qiwi Wallet
+    * РСЃС‚РѕС‡РЅРёРє РѕРїР»Р°С‚С‹: mobile - РѕРїР»Р°С‚Р° СЃ РјРѕР±РёР»СЊРЅРѕРіРѕ С‚РµР»РµС„РѕРЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, qw - СЃ Р»СЋР±С‹С… РёСЃС‚РѕС‡РЅРёРєРѕРІ РѕРїР»Р°С‚С‹ Visa Qiwi Wallet
     * @var string
     */
     public $pay_source = 'qw';
     
     
     /**
-    * название провайдера
+    * РЅР°Р·РІР°РЅРёРµ РїСЂРѕРІР°Р№РґРµСЂР°
     * @var string
     */
     public $prv_name = 'My store';
@@ -52,18 +52,18 @@ class Qiwi{
     
     
     /**
-	* Выставление счета
+	* Р’С‹СЃС‚Р°РІР»РµРЅРёРµ СЃС‡РµС‚Р°
 	* 
-	* @param {string} tel Телефон пользователя, на которого выставляется счет
-	* @param {int} amount Сумма счета
-	* @param {string} date Срок годности счета (в формате ISO 8601)
-	* @param {string} bill_id Уникальный номер счета
-	* @param {string} comment Комментарий к платежу (не обязательно)
-	* @returns {object} Объект ответа от сервера QIWI
+	* @param {string} tel РўРµР»РµС„РѕРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РЅР° РєРѕС‚РѕСЂРѕРіРѕ РІС‹СЃС‚Р°РІР»СЏРµС‚СЃСЏ СЃС‡РµС‚
+	* @param {int} amount РЎСѓРјРјР° СЃС‡РµС‚Р°
+	* @param {string} date РЎСЂРѕРє РіРѕРґРЅРѕСЃС‚Рё СЃС‡РµС‚Р° (РІ С„РѕСЂРјР°С‚Рµ ISO 8601)
+	* @param {string} bill_id РЈРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ СЃС‡РµС‚Р°
+	* @param {string} comment РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє РїР»Р°С‚РµР¶Сѓ (РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
+	* @returns {object} РћР±СЉРµРєС‚ РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР° QIWI
 	*/
     function create($tel, $amount, $date, $bill_id, $comment = null){
         $parameters = array(
-            'user' => 'tel:+'.$tel, // телефон начинается с +
+            'user' => 'tel:+'.$tel, // С‚РµР»РµС„РѕРЅ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ +
             'amount' => $amount, 
             'ccy' => $this->currency, 
             'comment' => $comment,
@@ -87,7 +87,7 @@ class Qiwi{
         $httpResponse = curl_exec($ch);
         
         if (!$httpResponse) {
-            // Описание ошибки, к примеру 
+            // РћРїРёСЃР°РЅРёРµ РѕС€РёР±РєРё, Рє РїСЂРёРјРµСЂСѓ 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
@@ -97,11 +97,11 @@ class Qiwi{
     
     
     /**
-	* Переадресация на страницу оплаты счета
+	* РџРµСЂРµР°РґСЂРµСЃР°С†РёСЏ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РѕРїР»Р°С‚С‹ СЃС‡РµС‚Р°
 	* 
-	* @param {string} bill_id Уникальный номер счета
-	* @param {string} success_url URL, на который пользователь будет переброшен в случае успешного проведения операции (не обязательно)
-	* @param {string} fail_url URL, на который пользователь будет переброшен в случае неудачного завершения операции (не обязательно)
+	* @param {string} bill_id РЈРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ СЃС‡РµС‚Р°
+	* @param {string} success_url URL, РЅР° РєРѕС‚РѕСЂС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РїРµСЂРµР±СЂРѕС€РµРЅ РІ СЃР»СѓС‡Р°Рµ СѓСЃРїРµС€РЅРѕРіРѕ РїСЂРѕРІРµРґРµРЅРёСЏ РѕРїРµСЂР°С†РёРё (РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
+	* @param {string} fail_url URL, РЅР° РєРѕС‚РѕСЂС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ Р±СѓРґРµС‚ РїРµСЂРµР±СЂРѕС€РµРЅ РІ СЃР»СѓС‡Р°Рµ РЅРµСѓРґР°С‡РЅРѕРіРѕ Р·Р°РІРµСЂС€РµРЅРёСЏ РѕРїРµСЂР°С†РёРё (РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)
 	*/
     function redir($bill_id, $success_url = '', $fail_url = ''){
         header("Location: https://w.qiwi.com/order/external/main.action?shop=" . $this->shop_id . "&transaction=" . $bill_id .
@@ -110,10 +110,10 @@ class Qiwi{
     
     
     /**
-	* Информация о счете
+	* РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‡РµС‚Рµ
 	* 
-	* @param {string} bill_id Уникальный номер счета
-	* @returns {object} Объект ответа от сервера QIWI
+	* @param {string} bill_id РЈРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ СЃС‡РµС‚Р°
+	* @returns {object} РћР±СЉРµРєС‚ РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР° QIWI
 	*/
     function info($bill_id){
         $ch = curl_init('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
@@ -129,7 +129,7 @@ class Qiwi{
         $httpResponse = curl_exec($ch);
         
         if (!$httpResponse) {
-            // Описание ошибки, к примеру 
+            // РћРїРёСЃР°РЅРёРµ РѕС€РёР±РєРё, Рє РїСЂРёРјРµСЂСѓ 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
@@ -139,10 +139,10 @@ class Qiwi{
     
     
     /**
-	* Отмена платежа
+	* РћС‚РјРµРЅР° РїР»Р°С‚РµР¶Р°
 	* 
-	* @param {string} bill_id Уникальный номер счета
-	* @returns {object} Объект ответа от сервера QIWI
+	* @param {string} bill_id РЈРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ СЃС‡РµС‚Р°
+	* @returns {object} РћР±СЉРµРєС‚ РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР° QIWI
 	*/
     function reject($bill_id){
         $ch = curl_init('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
@@ -158,7 +158,7 @@ class Qiwi{
         $httpResponse = curl_exec($ch);
         
         if (!$httpResponse) {
-            // Описание ошибки, к примеру 
+            // РћРїРёСЃР°РЅРёРµ РѕС€РёР±РєРё, Рє РїСЂРёРјРµСЂСѓ 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
