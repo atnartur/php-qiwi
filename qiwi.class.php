@@ -167,6 +167,9 @@ class Qiwi{
 	* @returns {object} Объект ответа от сервера QIWI
 	*/
     function reject($bill_id){
+    	$parameters = array(
+		'status' => 'rejected'
+		); 
         $ch = $this->__curl_start('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -176,6 +179,7 @@ class Qiwi{
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, $this->rest_id . ':' . $this->rest_pass);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $httpResponse = curl_exec($ch);
         
