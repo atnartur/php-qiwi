@@ -1,4 +1,4 @@
-<?
+<?php
 require 'qiwi.class.php';
 
 $Qiwi = new Qiwi(); // Создаем экземпляр класса

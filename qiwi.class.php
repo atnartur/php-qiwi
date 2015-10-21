@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * Qiwi - класс для работы с платежным API от QIWI
  * @package Qiwi
@@ -182,7 +182,7 @@ class Qiwi{
 	*/
     function reject($bill_id){
     	$parameters = array(
-		'status' => 'rejected'
+		    'status' => 'rejected'
 		); 
         $ch = $this->__curl_start('https://w.qiwi.com/api/v2/prv/'.$this->shop_id.'/bills/'.$bill_id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
