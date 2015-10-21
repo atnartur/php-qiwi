@@ -34,22 +34,17 @@ $Qiwi->redir(
 
 $info_result = $Qiwi->info($bill_id);
 
-if($info_result->result_code !== 0){
+if($info_result->result_code !== 0)
     echo 'Ошибка в получении информации о счете';
-}
-else{
+else
     echo 'Статус счета: ' . $info_result->bill->status;
-}
 
 
 // ОТМЕНА СЧЕТА
 
 $reject_result = $Qiwi->reject($bill_id);
 
-if($reject_result->bill->status === 'rejected'){
+if($reject_result->bill->status === 'rejected')
     echo 'Не удалось отменить счет';
-}
-else{
+else
     echo 'Счет отменен';
-}
-?>

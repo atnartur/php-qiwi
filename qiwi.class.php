@@ -48,6 +48,13 @@ class Qiwi{
     * @var string
     */
     public $prv_name = 'My store';
+
+
+    /**
+     * Флаг отладки. Если true, выводятся отладочные сообщения
+     * @var boolean
+     */
+    public $debug = false;
     
     
     
@@ -107,13 +114,17 @@ class Qiwi{
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $httpResponse = curl_exec($ch);
-        
+
+        if($this->debug)
+            var_dump($httpResponse);
+
         if (!$httpResponse) {
             // Описание ошибки, к примеру 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
             return false;
         }
         $httpResponseAr = @json_decode($httpResponse);
+
         return $httpResponseAr->response;
     }
     
@@ -149,7 +160,10 @@ class Qiwi{
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $httpResponse = curl_exec($ch);
-        
+
+        if($this->debug)
+            var_dump($httpResponse);
+
         if (!$httpResponse) {
             // Описание ошибки, к примеру 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
@@ -182,7 +196,10 @@ class Qiwi{
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         $httpResponse = curl_exec($ch);
-        
+
+        if($this->debug)
+            var_dump($httpResponse);
+
         if (!$httpResponse) {
             // Описание ошибки, к примеру 
             throw new Exception(curl_error($ch).'('.curl_errno($ch).')');
@@ -192,4 +209,3 @@ class Qiwi{
         return $httpResponseAr->response;
     }
 }
-?>
