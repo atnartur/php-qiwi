@@ -18,9 +18,7 @@ $create_result = $Qiwi->create(
 
 if($create_result->result_code !== 0){
     echo 'Ошибка в создании счета';
-}
-else{
-    echo 'Счет выставлен';
+    exit;
 }
 
 // ПЕРЕАДРЕСАЦИЯ НА СТРАНИЦУ ОПЛАТЫ
