@@ -127,6 +127,20 @@ class Qiwi{
 
         return $httpResponseAr->response;
     }
+
+
+    /**
+     * Возвращает ссылку на страницу оплаты счета. Используется в redir()
+     *
+     * @param {string} bill_id Уникальный номер счета
+     * @param {string} success_url URL, на который пользователь будет переброшен в случае успешного проведения операции (не обязательно)
+     * @param {string} fail_url URL, на который пользователь будет переброшен в случае неудачного завершения операции (не обязательно)
+     * @return {string} Ссылка на страницу оплаты счета
+     */
+    function redir_link($bill_id, $success_url = '', $fail_url = ''){
+        return "https://w.qiwi.com/order/external/main.action?shop=" . $this->shop_id . "&transaction=" . $bill_id .
+            "&successUrl=" . $success_url . "&failUrl=" . $fail_url;
+    }
     
     
     /**
@@ -137,8 +151,7 @@ class Qiwi{
 	* @param {string} fail_url URL, на который пользователь будет переброшен в случае неудачного завершения операции (не обязательно)
 	*/
     function redir($bill_id, $success_url = '', $fail_url = ''){
-        header("Location: https://w.qiwi.com/order/external/main.action?shop=" . $this->shop_id . "&transaction=" . $bill_id .
-               "&successUrl=" . $success_url . "&failUrl=" . $fail_url);
+        header("Location: " . $this->redir_link($bill_id, $success_url, $fail_url));
     }
     
     
